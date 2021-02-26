@@ -17,7 +17,7 @@
 #define NUM_LEDS 20
 #define DATA_PIN 2
 
-const String FirmwareVer = {"1.0"};
+const String FirmwareVer = {"1.1"};
 #define URL_fw_Version "https://raw.githubusercontent.com/Sthira-Nusantara/iot-room-firmware/master/version.txt"
 #define URL_fw_Bin "https://raw.githubusercontent.com/Sthira-Nusantara/iot-room-firmware/master/firmware.bin"
 
@@ -330,6 +330,14 @@ void callback(char *topic, byte *payload, unsigned int length)
   for (int i = 0; i < length; i++)
   {
     Serial.println((char)payload[i]);
+  }
+
+  if (String(topic).indexOf(testSubs) >= 0)
+  {
+    if (payload[0] == '1')
+    {
+      blinkingColor(CRGB::Blue, 3, 250);
+    }
   }
 
   if (String(topic).indexOf(toggle) >= 0)
